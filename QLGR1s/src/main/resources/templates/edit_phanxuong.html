@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>Cập nhật phân xưởng</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/phanxuong">Phân xưởng</a></li>
+					<li class="breadcrumb-item active">Cập nhật phân xưởng</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+		<section class="section dashboard">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Cập nhật phân xưởng</h5>
+					<!-- Custom Styled Validation -->
+					<form class="row g-3 needs-validation" novalidate th:action="@{/phanxuong/editsave}"
+						th:object="${model}" th:method="post" enctype="multipart/form-data">
+						<input type="hidden" th:field="*{maphanxuong}">
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Tên phân xưởng</label>
+							<div class="col-sm-10">
+								<input type="text" th:field="*{tenphanxuong}" class="form-control"
+									id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">
+									Vui lòng nhập Tên phân xưởng.
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Họ tên quản đốc</label>
+							<div class="col-sm-10">
+								<input type="text" th:field="*{hotenquandoc}" class="form-control"
+									id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">
+									Vui lòng nhập Họ tên quản đốc.
+								</div>
+							</div>
+						</div>
+						<input type="hidden" th:field="*{avt}">
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Ảnh</label>
+							<div class="col-sm-10">
+								<input type="file" name="img" class="form-control">
+								<img th:src="@{'/photo/'+${model.avt}}" height="150px" >
+							</div>			
+						</div>	
+					
+											
+						<div class="text-center">
+							<button class="btn btn-primary" type="submit">Lưu lại</button>
+						</div>
+					</form><!-- End Custom Styled Validation -->
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

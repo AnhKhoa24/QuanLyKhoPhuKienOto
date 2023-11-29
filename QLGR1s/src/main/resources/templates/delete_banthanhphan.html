@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>Xóa sản phẩm</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/banthanhphan">Danh sách sản phẩm</a></li>
+					<li class="breadcrumb-item active">Xóa sản phẩm</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+		<div class="alert alert-warning alert-dismissible fade show">
+			Bạn có chắc muốn xóa sản phẩm này không?
+		</div>
+		<section class="section dashboard">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Xác nhận xóa sản phẩm</h5>
+					<!-- Custom Styled Validation -->
+					<form id="myForm" class="row g-3 needs-validation" novalidate th:action="@{/banthanhphan/deleteok}"
+						th:object="${model}" th:method="post">
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Mã sản phẩm</label>
+							<div class="col-sm-10">
+								<input type="text" th:field="*{mabanthanhphan}" class="form-control"
+									id="validationCustomUsername" readonly>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Tên sản phẩm</label>
+							<div class="col-sm-10">
+								<input type="text" th:field="*{tenbanthanhphan}" class="form-control"
+									id="validationCustomUsername" readonly>
+
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Giá bán</label>
+							<div class="col-sm-10">
+								<input type="number" th:field="*{giaban}" class="form-control"
+									id="validationCustomUsername" readonly>
+
+							</div>
+						</div>
+						
+					</form><!-- End Custom Styled Validation -->
+					<div class="text-center">
+						<a href="/banthanhphan">
+							<button class="btn btn-secondary"><i class="bi bi-caret-left-fill"></i>Trở lại</button>
+						</a>
+						<button onclick="submitForm()" class="btn btn-danger" type="submit">Xóa luôn</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+	
+	<script>
+		function submitForm() {
+			// Lấy thẻ form bằng id
+			var form = document.getElementById("myForm");
+
+			// Submit form
+			form.submit();
+		}
+	</script>
+</body>
+
+</html>

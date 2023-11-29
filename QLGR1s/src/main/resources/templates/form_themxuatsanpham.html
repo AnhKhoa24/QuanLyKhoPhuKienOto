@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>Thêm đơn hàng</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/xuatsanpham">Đơn hàng</a></li>
+					<li class="breadcrumb-item active">Thêm đơn hàng</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+		<section class="section dashboard">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Thêm đơn hàng</h5>
+					<form class="row g-3 needs-validation" novalidate action="/xuatsanpham/save" th:object="${model}"
+						th:method="post">
+
+						<div id="productFields" class="row mb-3">
+
+							<div class="row g-3">
+								
+								<div class="col-md-6">
+									<input type="text" th:field="*{tenkh}" class="form-control" placeholder="Tên khách hàng"
+										id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+									<div class="invalid-feedback">
+										Vui lòng nhập tên khách hàng.
+									</div>
+								</div>
+								<div class="col-md-4">
+									<input type="text" th:field="*{sdt}" class="form-control" placeholder="Số điện thoại"
+										id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+									<div class="invalid-feedback">
+										Vui lòng nhập số điện thoại khách hàng.
+									</div>
+								</div>
+								<div class="col-md-10">
+									<input type="text" th:field="*{diachi}" class="form-control" placeholder="Địa chỉ"
+										id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+									<div class="invalid-feedback">
+										Vui lòng nhập địa chỉ.
+									</div>
+								</div>
+								<div class="col-md-10">
+									<input type="date" th:field="*{ngayphieuxuat}" class="form-control" placeholder="Ngày bán"
+										id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+									<div class="invalid-feedback">
+										Vui lòng nhập ngày bán.
+									</div>
+								</div>
+								<div class="col-md-6">
+									<select class="form-select" name="sanpham">
+										<option th:each="each: ${dssanpham}" th:text="${each.TenBanThanhPhan}+' |Kho: '+${each.Kho}"
+											th:value="${each.MaBanThanhPhan}" />
+									</select>								
+								</div>
+								<div class="col-md-4">
+									<input type="number" name="soluong" class="form-control" placeholder="Số lượng"
+										id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+									<div class="invalid-feedback">
+										Vui lòng nhập số lượng.
+									</div>
+								</div>
+								<div class="col-md-2">
+									<button type="button" onclick="addNewProductField()" class="btn btn-secondary">
+										<i class="ri-add-fill"></i></button>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="text-center">
+
+							<button class="btn btn-primary" type="submit">Thêm</button>
+						</div>
+
+					</form><!-- End Custom Styled Validation -->
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+
+	<script th:inline="javascript">
+		function addNewProductField() {
+			// Lấy danh sách từ controller và gán vào biến dsbanthanhphan
+			const dsbanthanhphan = /*[[${dssanpham}]]*/[];
+
+			// Tạo phần tử div row g-3
+			const rowDiv = document.createElement("div");
+			rowDiv.className = "row g-3";
+
+			// Tạo phần tử div col-md-6 và select
+			const col6Div = document.createElement("div");
+			col6Div.className = "col-md-6";
+			const selectElement = document.createElement("select");
+			selectElement.className = "form-select";
+			selectElement.name = "sanpham";
+
+			// Thêm các tùy chọn vào selectElement
+			dsbanthanhphan.forEach(option => {
+				const optionElement = document.createElement("option");
+				optionElement.innerHTML = option.TenBanThanhPhan + " |Kho: "+option.Kho;
+				optionElement.value = option.MaBanThanhPhan;
+				selectElement.appendChild(optionElement);
+			});
+
+			col6Div.appendChild(selectElement);
+			rowDiv.appendChild(col6Div);
+
+			// Tạo phần tử div col-md-4 và input
+			const col4Div = document.createElement("div");
+			col4Div.className = "col-md-4";
+			const inputElement = document.createElement("input");
+			inputElement.type = "number";
+			inputElement.name = "soluong";
+			inputElement.className = "form-control";
+			inputElement.placeholder = "Số lượng";
+			inputElement.id = "validationCustomUsername";
+			inputElement.setAttribute("aria-describedby", "inputGroupPrepend");
+			inputElement.required = true;
+
+			const invalidFeedbackDiv = document.createElement("div");
+			invalidFeedbackDiv.className = "invalid-feedback";
+			invalidFeedbackDiv.innerHTML = "Vui lòng nhập số lượng.";
+
+			col4Div.appendChild(inputElement);
+			col4Div.appendChild(invalidFeedbackDiv);
+			rowDiv.appendChild(col4Div);
+
+			// Tạo phần tử div col-md-2 và button
+			const col2Div = document.createElement("div");
+			col2Div.className = "col-md-2";
+			const buttonElement = document.createElement("button");
+			buttonElement.type = "button";
+			buttonElement.className = "btn btn-danger";
+			buttonElement.innerHTML = '<i class="ri-close-fill"></i>';
+			buttonElement.addEventListener("click", function () {
+				removeProductField(rowDiv);
+			});
+
+			col2Div.appendChild(buttonElement);
+			rowDiv.appendChild(col2Div);
+
+			// Tìm phần tử có ID "productFields" để thêm rowDiv vào DOM
+			const productFieldsDiv = document.getElementById("productFields");
+			productFieldsDiv.appendChild(rowDiv);
+		}
+
+		function removeProductField(element) {
+			// Xóa phần tử cha của element (div.row g-3)
+			element.remove();
+		}
+	</script>
+</body>
+
+</html>

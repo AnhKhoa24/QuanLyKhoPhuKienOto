@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: html_head">
+	<link th:href="@{/mycustoms/css.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+	<div th:replace="fragments :: menu" />
+
+	<div class="container-fluid text-center">
+		<h3>Danh sách sản phẩm</h3>
+
+		<div th:if="${message}">
+			[[${message}]]
+		</div>
+	</div>
+
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Mã sản phẩm</th>
+				<th scope="col">Tên sản phẩm</th>
+				<th scope="col">Giá bán</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="each : ${model}">
+				<td th:text="${each.MaBanThanhPhan}"></td>
+				<td th:text="${each.TenBanThanhPhan}"></td>
+				<td><span th:text="${#numbers.formatDecimal(each.GiaBan, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:if="${notfound}">
+		[[${notfound}]]
+	</div>
+	<span th:each="index : ${#numbers.sequence(1, sotrang)}">
+		<a th:href="@{/banthanhphan(keyword=${keyword}, page=${index})}">[[${index}]]</a>
+	</span>
+
+	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group me-2" role="group" aria-label="Second group">
+			<button type="button" class="btn btn-secondary">5</button>
+		</div>
+		<div class="btn-group me-2" role="group" aria-label="Second group">
+			<button type="button" class="btn btn-secondary">5</button>
+		</div>
+		<div class="btn-group me-2" role="group" aria-label="Second group">
+			<button type="button" class="btn btn-secondary">5</button>
+		</div>
+	</div>
+
+	<form action="/banthanhphan" method="get">
+		<input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm...">
+		<button type="submit">Search</button>
+	</form>
+	<div th:replace="fragments :: footer" />
+	<script type="text/javascript" th:src="@{/mycustoms/js.js}"></script>
+</body>
+
+</html>

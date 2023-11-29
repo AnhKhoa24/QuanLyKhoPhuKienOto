@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Thống kê doanh thu</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item active">Thống kê doanh thu</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+		<section class="section dashboard">
+			<div class="row">
+
+				<!-- Left side columns -->
+				<div class="col-lg-12">
+					<div class="row">
+						<!-- Revenue Card -->
+						<div class="col-xxl-3 col-md-6">
+							<div class="card info-card sales-card">
+
+								<div class="card-body">
+									<h5 class="card-title">Tổng nhập</h5>
+
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="bi bi-cash-coin"></i>
+										</div>
+										<div class="ps-3">
+											<h5 class="card-title" th:text="${#numbers.formatDecimal(tongtiennhap, 0, 'COMMA', 0, 'POINT')}+' vnđ'" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div><!-- End Revenue Card -->
+
+						<!-- Customers Card -->
+						<div class="col-xxl-3 col-xl-12">
+
+							<div class="card info-card revenue-card">
+								<div class="card-body">
+									<h5 class="card-title">Doanh thu</h5>
+
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="bi bi-coin"></i>
+										</div>
+										<div class="ps-3">
+											<h5 class="card-title" th:text="${#numbers.formatDecimal(tongtienxuat, 0, 'COMMA', 0, 'POINT')}+' vnđ'" />
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div><!-- End Customers Card -->
+						<!-- Customers Card -->
+						<div class="col-xxl-6 col-xl-12">
+
+							<div class="card info-card customers-card">
+								<div class="card-body">
+									<h5 class="card-title">Lợi nhuận</h5>
+
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="ri-exchange-dollar-fill"></i>
+										</div>
+										<div class="ps-3">
+											<h5 class="text-success card-title" th:text="${#numbers.formatDecimal(loinhuan, 0, 'COMMA', 0, 'POINT')}+' vnđ'" />
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div><!-- End Customers Card -->
+					</div>
+		</section>
+		<section class="section">
+			<!-- Reports -->
+			<div class="col-12">
+				<div class="card">
+					<div class="datatable-top">
+						<form action="/thongkedoanhthu" method="get">
+							<label for="begin">Từ:</label>
+							<input type="date" id="begin" th:value="${begin}" name="begin" placeholder="Ngày bắt đầu"
+								required>
+
+							<label for="end">Đến:</label>
+							<input type="date" id="end" th:value="${end}" name="end" placeholder="Ngày kết thúc"
+								required>
+
+							<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+						</form>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Doanh thu <span>|(Đơn vị vnđ)</span></h5>
+
+						<!-- Line Chart -->
+						<div id="reportsChart"></div>
+
+						<script th:inline="javascript">
+							document.addEventListener("DOMContentLoaded", () => {
+								new ApexCharts(document.querySelector("#reportsChart"), {
+									series: [{
+										name: 'Nhập vào',
+										data: /*[[${nhapvao}]]*/[],
+									}, {
+										name: 'Bán ra',
+										data: /*[[${xuatra}]]*/[]
+									}],
+									chart: {
+										height: 350,
+										type: 'area',
+										toolbar: {
+											show: false
+										},
+									},
+									markers: {
+										size: 4
+									},
+									colors: ['#4154f1', '#2eca6a', '#ff771d'],
+									fill: {
+										type: "gradient",
+										gradient: {
+											shadeIntensity: 1,
+											opacityFrom: 0.3,
+											opacityTo: 0.4,
+											stops: [0, 90, 100]
+										}
+									},
+									dataLabels: {
+										enabled: false
+									},
+									stroke: {
+										curve: 'smooth',
+										width: 2
+									},
+									yaxis: {
+										min: 0,
+										max: /*[[${maxY}]]*/[],
+										labels: {
+											formatter: function (value) {
+												// Sử dụng hàm định dạng số với kí tự phân cách hàng nghìn
+												return value.toLocaleString();
+											}
+										}
+									},
+
+									xaxis: {
+										type: 'category',
+										categories: /*[[${dsngay}]]*/[]
+									},
+									tooltip: {
+										x: {
+											format: 'dd/MM/yyyy'
+										},
+									}
+								}).render();
+							});
+						</script>
+						<!-- End Line Chart -->
+
+					</div>
+
+				</div>
+			</div><!-- End Reports -->
+		</section>
+
+	</main>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

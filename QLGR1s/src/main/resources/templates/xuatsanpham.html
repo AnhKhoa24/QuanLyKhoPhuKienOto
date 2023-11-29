@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Đơn hàng</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item active">Đơn hàng</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+		<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+			[[${success}]]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			[[${error}]]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+		<section class="section">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Danh sách đơn hàng</h5>
+
+					<div class="datatable-top">
+						<form action="/xuatsanpham" method="get">
+							<input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm..."
+								title="Enter search keyword">
+							<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+						</form>
+					</div>
+
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Số phiếu xuất</th>
+								<th scope="col">Ngày phiếu xuất</th>
+								<th scope="col">Mã khách hàng</th>
+								<th scope="col">Thông tin khách hàng</th>
+								<th scope="col">Chi tiết</th>
+								<th scope="col">Tổng tiền thanh toán</th>
+								<th scope="col">
+									<a href="/xuatsanpham/them">Thêm</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="each : ${model}">
+								<td th:text="${each.SoPhieuXuat}"></td>
+								<td th:text="${#dates.format(each.NgayPhieuXuat, 'dd-MMM-yyyy')}"></td>
+								<td th:text="${each.MaKh}"></td>
+								<td>
+									<p th:text="${each.TenKh}" />
+								
+									<p th:text="${each.Sdt}" />
+								
+									<p th:text="${each.DiaChi}" />
+								</td>
+								<td>
+									<a th:href="@{'/xuatsanpham/details/'+${each.SoPhieuXuat}}">Chi tiết</a>
+								</td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.TongTien, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+								<td>
+									<div class="btn-group" role="group" aria-label="Basic outlined example">
+										
+											<a th:href="@{'/xuatsanpham/edit/'+${each.SoPhieuXuat}}">
+												<button type="button" class="btn btn-outline-primary">Sửa</button>
+											</a>
+										
+										
+											<a th:href="@{'/xuatsanpham/delete/'+${each.SoPhieuXuat}}">
+												<button type="button" class="btn btn-outline-primary">Xóa</button>
+											</a>
+										
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- End Table with stripped rows -->
+	
+					<div th:if="${notfound}">
+						[[${notfound}]]
+					</div>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-end">
+							<li class="page-item ">
+								<a class="page-link"
+									th:href="@{/xuatsanpham(keyword=${keyword}, page=${trang}-1)}">Previous</a>
+							</li>
+							<li class="page-item" th:each="index : ${#numbers.sequence(1, sotrang)}">
+								<a class="page-link"
+									th:href="@{/xuatsanpham(keyword=${keyword}, page=${index})}">[[${index}]]</a>
+							</li>
+
+
+						</ul>
+					</nav><!-- End Right/End Aligned Pagination -->
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	<footer th:replace="layout :: footer" />
+	
+</body>
+
+</html>

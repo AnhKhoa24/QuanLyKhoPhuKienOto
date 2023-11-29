@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Chi tiết sản phẩm</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/banthanhphan">Danh sách sản phẩm</a></li>
+					<li class="breadcrumb-item active">Chi tiết sản phẩm</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+
+		<section class="section dashboard">
+			<div class="row">
+
+				<!-- Left side columns -->
+				<div class="col-lg-12">
+					<div class="row">
+
+						<!-- Sales Card -->
+						<div class="col-xxl-4 col-md-6">
+							<div class="card info-card sales-card">
+								<div class="card-body">
+									<h5 class="card-title"></h5>
+									<!-- Slides with controls -->
+									<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+										<div class="carousel-inner">
+											<div class="carousel-item active">
+												<img th:src="@{'/photo/'+${anhdau.linkimg}}" height="132.6px"
+													width="380px" class="d-block w-100" alt="...">
+											</div>
+											<div class="carousel-item" th:each="each:${model}">
+												<img th:src="@{'/photo/'+${each.linkimg}}" height="132.6px"
+													width="380px" class="d-block w-100" alt="...">
+											</div>
+
+										</div>
+
+										<button class="carousel-control-prev" type="button"
+											data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Previous</span>
+										</button>
+										<button class="carousel-control-next" type="button"
+											data-bs-target="#carouselExampleControls" data-bs-slide="next">
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Next</span>
+										</button>
+
+									</div><!-- End Slides with controls -->
+								</div>
+
+							</div>
+						</div>
+						<!-- End Sales Card -->
+
+						<!-- Revenue Card -->
+						<div class="col-xxl-6 col-md-6">
+							<div class="card info-card revenue-card">
+
+								<div class="filter">
+
+								</div>
+
+								<div class="card-body">
+									<h5 class="card-title" th:text="'Sản phẩm: '+${info.tenbanthanhphan}" />
+									<div class="d-flex align-items-center">
+
+										<div class="ps-3">
+											<span class="text-success small pt-1 fw-bold">
+
+												<p
+													th:text="'Giá bán: '+${#numbers.formatDecimal(info.giaban, 0, 'COMMA', 0, 'POINT')}+' vnđ'">
+												</p>
+												<p th:text="'Kho: ' +${kho}" />
+												<p th:text="'Đã bán: ' +${daban}" />
+											</span>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div><!-- End Revenue Card -->
+						<!-- Revenue Card -->
+						<div class="col-xxl-10 col-md-6">
+							<div class="card info-card revenue-card">
+
+								<div class="filter">
+
+								</div>
+
+								<div class="card-body">
+									<h5 class="card-title">Mô tả</h5>
+									<div class="d-flex align-items-center">
+
+										<div class="ps-3">
+											<span class="text-dark small pt-1 fw-bold">
+
+												<p th:utext="${info.mota}" style="white-space: pre-line;"/>
+												
+											</span>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div><!-- End Revenue Card -->
+						<div class="col-10">
+							<a href="/banthanhphan">
+								<button class="btn btn-secondary" type="submit"><i class="bi bi-box-arrow-left"></i>
+									Trở lại</button>
+							</a>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+	</main>
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Phân xưởng</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item active">Phân xưởng</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+		<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+			<i class="bi bi-check-circle me-1"></i>
+			[[${success}]]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+		<div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			<i class="bi bi-exclamation-octagon me-1"></i>
+			[[${error}]]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+		<section class="section">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Phân xưởng</h5>
+
+					<div class="datatable-top">
+						<form action="/phanxuong" method="get">
+							<input type="text" name="keyword" th:value="${keyword}" placeholder="Search..."
+								title="Enter search keyword">
+							<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+						</form>
+					</div>
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Mã phân xưởng</th>
+								<th scope="col">Tên phân xưởng</th>
+								<th scope="col">Họ tên quản đốc</th>
+								<th scope="col">Ảnh quản đốc</th>
+								<th scope="col">
+									<a href="/phanxuong/new">Thêm</a>
+								</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="each : ${model}">
+								<td th:text="${each.MaPhanXuong}"></td>
+								<td th:text="${each.TenPhanXuong}"></td>
+								<td th:text="${each.HoTenQuanDoc}"></td>
+								<td>
+									<img class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+										th:src="'/photo/'+${each.avt}" height="64px" width="64px">
+								</td>
+								<td>
+									<div class="btn-group" role="group" aria-label="Basic outlined example">
+
+										<a th:href="@{'/phanxuong/edit/'+${each.MaPhanXuong}}"><button type="button"
+												class="btn btn-outline-primary">Sửa</button></a>
+
+
+										<a th:href="@{'/phanxuong/delete/'+${each.MaPhanXuong}}"><button type="button"
+												class="btn btn-outline-primary">Xóa </button></a>
+
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- End Table with stripped rows -->
+					<!-- Right/End Aligned Pagination -->
+					<div th:if="${notfound}">
+						[[${notfound}]]
+					</div>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-end">
+							<li class="page-item ">
+								<a class="page-link"
+									th:href="@{/phanxuong(keyword=${keyword}, page=${trang}-1)}">Previous</a>
+							</li>
+							<li class="page-item" th:each="index : ${#numbers.sequence(1, sotrang)}">
+								<a class="page-link"
+									th:href="@{/phanxuong(keyword=${keyword}, page=${index})}">[[${index}]]</a>
+							</li>
+
+
+						</ul>
+					</nav><!-- End Right/End Aligned Pagination -->
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+
+
+
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Về chúng tôi</h5>
+
+							<!-- Default Tabs -->
+							<ul class="nav nav-tabs" id="myTab" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+										data-bs-target="#home" type="button" role="tab" aria-controls="home"
+										aria-selected="true">Giới thiệu</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+										data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
+										aria-selected="false">Công nghệ</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+										data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
+										aria-selected="false">Contact</button>
+								</li>
+							</ul>
+							<div class="tab-content pt-2" id="myTabContent">
+								<div class="tab-pane fade show active" id="home" role="tabpanel"
+									aria-labelledby="home-tab">
+									Hiện nay, ô tô một trong những phương tiện phổ biến ở Việt Nam. Vì vậy nhu cầu mua
+									bán, bảo dưỡng, sửa chữa các linh kiện, phụ tùng là rất cao. Do đó, những tiệm kinh
+									doanh về phụ tùng, linh kiện ô tô là những nhu cầu thiết yếu. Tuy nhiên, ô tô là là
+									một loại phương tiện có cấu tạo rất phức tạp, hàng nghìn phụ kiện và nhiều phụ tùng
+									khác nhau. Vậy làm thế nào để kiểm soát, quản lý phụ tùng và linh kiện, chi phí, lợi
+									nhuận một cách khoa học, hiện đại hơn.
+									<br>
+									Phần mềm quản lý kho bán phụ kiện ô tô là một giải pháp hợp lý để giải quyết nhiều
+									vấn đề. Nếu quản lý theo cách truyền thống, những khó khăn trong việc quản lý và vận
+									hành là cực kỳ rắc rối. Mất khá nhiều thời gian kiểm kê hàng hóa: kinh doanh phụ
+									tùng ô tô, xe máy phải quản lý hàng nghìn mặt hàng khác nhau như đèn xi nhan, bugi,
+									đĩa phanh, gương xe, v.v… Thế nhưng, vấn đề chung của các chủ cửa hàng mới kinh
+									doanh là mất nhiều thời gian để biết hàng còn hay hết, số lượng còn bao nhiêu, hàng
+									đang để ở đâu. Nhân viên tư vấn và bán hàng không kịp thời tư vấn khách hàng nên dễ
+									bị mất khách, doanh thu giảm. Nếu chỉ quản lý theo cách truyền thống hoặc ghi nhớ
+									thì theo thói quen này rất dễ bị thất thoát hàng hóa hoặc bán nhầm giá. Việc khiến
+									chủ cửa hàng ô tô, phụ tùng đau đầu chính là việc thống kê doanh số. Việc nhầm lẫn
+									khi tính toán không thể tránh khỏi trong khi lượng hàng, số khách đến lại đông. Nếu
+									không may nhầm chỉ một số thôi thì bạn sẽ phải làm lại từ đầu. Đặc thù kinh doanh
+									quản lý phụ tùng xe máy, ô tô này là khách hàng thường có thói quen lấy nhiều và
+									không thanh toán luôn. Do đó bạn sẽ phải ghi chép vào công nợ để quản lý.
+									<br>
+									Phần mềm Quản lý Kho Bán Phụ kiện Xe Ô tô là một giải pháp hiệu quả và tiện ích cho
+									các doanh nghiệp kinh doanh phụ kiện xe ô tô. Với khả năng tổ chức và quản lý thông
+									tin hàng hóa trong kho, phần mềm này giúp người dùng tối ưu hóa hiệu suất làm việc,
+									tăng cường tính chính xác và giảm thiểu sai sót trong quá trình quản lý kho
+								</div>
+								<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+									-Spring boot
+									<br>
+									-Mybatis<br>
+									-MySql<br>
+									-Spring security<br>
+									-JavaMailSender
+								</div>
+								<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+									Coding
+								</div>
+							</div><!-- End Default Tabs -->
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+	</main><!-- End #main -->
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

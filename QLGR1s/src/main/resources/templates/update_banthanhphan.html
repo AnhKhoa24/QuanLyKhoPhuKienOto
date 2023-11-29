@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>Cập nhật sản phẩm</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/banthanhphan">Sản phẩm</a></li>
+					<li class="breadcrumb-item active">Cập nhật sản phẩm</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+		<section class="section dashboard">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Cập nhật sản phẩm</h5>
+					<!-- Custom Styled Validation -->
+					<form class="row g-3 needs-validation" enctype="multipart/form-data" novalidate th:action="@{/banthanhphan/edit/save}" th:object="${model}"  th:method="post">
+						<input type="hidden" th:field="*{mabanthanhphan}">
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Tên sản phẩm</label>
+							<div class="col-sm-10">
+								<input type="text" th:field="*{tenbanthanhphan}" class="form-control" id="validationCustomUsername"
+									aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">
+									Vui lòng nhập tên sản phẩm.
+								</div>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="validationCustomUsername" class="col-sm-2 col-form-label">Giá bán</label>
+							<div class="col-sm-10">
+								<input type="number" th:field="*{giaban}" class="form-control" id="validationCustomUsername"
+									aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">
+									Vui lòng nhập giá bán.
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="inputPassword" class="col-sm-2 col-form-label">Mô tả</label>
+							<div class="col-sm-10">
+								<textarea th:field="*{mota}" class="form-control" style="height: 100px"></textarea>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="inputPassword" class="col-sm-2 col-form-label">Tải ảnh</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" name="anh" multiple>
+							</div>
+						</div>
+						<div class="text-center">						
+							<img th:each="each: ${anh}" th:src="@{'/photo/'+${each.linkimg}}" height="100px" width="100px">
+						</div>
+						
+						<div class="col-12">
+							<button class="btn btn-primary" type="submit">Cập nhật</button>
+						</div>
+					</form><!-- End Custom Styled Validation -->
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

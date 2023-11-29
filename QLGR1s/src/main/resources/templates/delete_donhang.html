@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Xác nhận xóa</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/xuatsanpham">Xem đơn hàng</a></li>
+					<li class="breadcrumb-item active">Xác nhận xóa</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+		<div class="alert alert-warning alert-dismissible fade show">
+			Bạn có chắc muốn xóa đơn hàng này không?
+		</div>
+
+		<section class="section dashboard">
+			<div class="row">
+
+				<!-- Left side columns -->
+				<div class="col-lg-12">
+					<div class="row">
+
+						<!-- Sales Card -->
+						<div class="col-xxl-6 col-md-6">
+							<div class="card info-card sales-card">
+
+
+								<div class="card-body">
+									<h5 class="card-title">Thông tin khách hàng</h5>
+									<div class="d-flex align-items-center">
+										<div class="ps-3">
+											<span class="text-success small pt-1 fw-bold">
+												<p th:text="'Tên: '+${ten} +'  |SĐT: '+ ${sdt}" />
+												<p th:text="'Địa chỉ: '+${diachi}" />
+											</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<!-- End Sales Card -->
+
+						<!-- Revenue Card -->
+						<div class="col-xxl-6 col-md-6">
+							<div class="card info-card revenue-card">
+
+								<div class="filter">
+
+								</div>
+
+								<div class="card-body">
+									<h5 class="card-title" th:text="'Đơn hàng: '+${sophieuxuat}"></h5>
+									<div class="d-flex align-items-center">
+
+										<div class="ps-3">
+											<span class="text-success small pt-1 fw-bold">
+												<p
+													th:text="'Tổng tiền: '+${#numbers.formatDecimal(tong, 0, 'COMMA', 0, 'POINT')}+' vnđ'">
+												</p>
+												<p
+													th:text="'Ngày lập phiếu: '+${#dates.format(ngayphieuxuat, 'dd-MMM-yyyy')}" />
+											</span>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div><!-- End Revenue Card -->
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="section">
+			<div class="card">
+				<div class="card-body">
+
+					<h5 class="card-title">Các sản phẩm</h5>
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Tên sản phẩm</th>
+								<th scope="col">Giá bán</th>
+								<th scope="col">Số lượng</th>
+								<th scope="col">Tổng</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="each : ${model}">
+								<td th:text="${each.TenBanThanhPhan}"></td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.GiaBan, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+								<td th:text="${each.SoLuong}"></td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.GiaBan*each.SoLuong, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<form id="myForm" action="/xuatsanpham/deleteok" method="post">
+						<input type="hidden" name="sophieuxuat" th:value="${sophieuxuat}">
+						<input type="hidden" name="makh" th:value="${makh}">
+
+					</form>
+					<div class="text-center">
+						<a href="/xuatsanpham">
+							<button class="btn btn-secondary">Trở lại</button>
+						</a>
+						<button onclick="submitForm()" class="btn btn-danger" type="submit">Xóa luôn</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+
+	<script>
+		function submitForm() {
+			// Lấy thẻ form bằng id
+			var form = document.getElementById("myForm");
+
+			// Submit form
+			form.submit();
+		}
+	</script>
+</body>
+
+</html>

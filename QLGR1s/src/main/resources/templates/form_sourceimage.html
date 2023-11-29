@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<form th:action="@{/sourceimage/save}" enctype="multipart/form-data" method="post" >
+
+		<input type="file" name="anh">
+		<br>
+		<button type="submit">Lưu</button>
+	</form>
+</body>
+
+</html>

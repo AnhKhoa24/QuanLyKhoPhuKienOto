@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head" />
+
+<body>
+	<header th:replace="layout :: header" />
+	<aside th:replace="layout :: sidebar" />
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>Chi tiết phiếu nhập</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/nhapsanpham">Phiếu nhập</a></li>
+					<li class="breadcrumb-item active">Chi tiết phiếu nhập</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+
+		<section class="section dashboard">
+			<div class="row">
+
+				<!-- Left side columns -->
+				<div class="col-lg-12">
+					<div class="row">
+
+						<!-- Sales Card -->
+						<div class="col-xxl-6 col-md-6">
+							<div class="card info-card sales-card">
+
+
+								<div class="card-body">
+									<h5 class="card-title">Thông tin phân xưởng</span></h5>
+
+									<div class="d-flex align-items-center">
+
+										<img class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+											th:src="@{'/photo/'+${anh}}" height="64px" width="64px">
+
+										<div class="ps-3">
+											
+											<span class="text-dark small pt-1 fw-bold">
+												<p th:text="'Quản đốc: '+${name}"/>
+												<p th:text="'Tên phân xưởng: '+${phanxuong}"/>				
+											</span>
+											
+											
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<!-- End Sales Card -->
+
+						<!-- Revenue Card -->
+						<div class="col-xxl-6 col-md-6">
+							<div class="card info-card revenue-card">
+
+								<div class="filter">
+
+								</div>
+
+								<div class="card-body">
+									<h5 class="card-title" th:text="'Phiếu nhập: '+${sophieunhap}"></h5>
+									<div class="d-flex align-items-center">
+
+										<div class="ps-3">
+											<span class="text-success small pt-1 fw-bold">
+												<p
+													th:text="'Tổng tiền: '+${#numbers.formatDecimal(tong, 0, 'COMMA', 0, 'POINT')}+' vnđ'">
+												</p>
+												<p
+													th:text="'Ngày lập phiếu: '+${#dates.format(ngayphieunhap, 'dd-MMM-yyyy')}" />
+											</span>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div><!-- End Revenue Card -->
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="section">
+			<div class="card">
+				<div class="card-body">
+
+					<h5 class="card-title">Các sản phẩm</h5>
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Tên sản phẩm</th>
+								<th scope="col">Giá đang bán</th>
+								<th scope="col">Số lượng nhập về</th>
+								<th scope="col">Giá nhập</th>
+								<th scope="col">Tổng nhập</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="each : ${model}">
+								<td th:text="${each.TenBanThanhPhan}"></td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.GiaBan, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+								<td th:text="${each.SoLuong}"></td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.GiaNhap, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+								<td><span
+										th:text="${#numbers.formatDecimal(each.GiaNhap*each.SoLuong, 0, 'COMMA', 0, 'POINT')}+' vnđ'"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="col-12">
+						<a href="/nhapsanpham">
+							<button class="btn btn-secondary" type="submit"><i class="bi bi-box-arrow-left"></i>
+								Trở lại</button>
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<footer th:replace="layout :: footer" />
+</body>
+
+</html>

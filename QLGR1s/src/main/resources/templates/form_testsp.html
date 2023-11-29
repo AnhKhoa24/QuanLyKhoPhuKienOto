@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<form action="buy" method="post">
+		<!-- Các trường thông tin khác -->
+		<div id="productFields">
+			<div class="product-field">
+				<input type="text" name="product" placeholder="Tên sản phẩm" required>
+				<input type="number" name="soluong" placeholder="Số lượng" required>
+				<button type="button" class="remove-product" onclick="removeProductField(this)">Xóa</button>
+			</div>
+		</div>
+		<button type="button" onclick="addProductField()">Thêm sản phẩm</button>
+		
+		<button type="submit">Mua</button>
+	</form>
+	
+	<script>
+		function addProductField() {
+  const productFields = document.getElementById('productFields');
+  const newField = document.createElement('div');
+  newField.classList.add('product-field');
+  newField.innerHTML = `
+    <input type="text" name="product" placeholder="Tên sản phẩm" required>
+    <input type="text" name="soluong" placeholder="Số lượng" required>
+    <button type="button" class="remove-product" onclick="removeProductField(this)">Xóa</button>
+  `;
+  productFields.appendChild(newField);
+}
+	</script>
+	<script>
+		function removeProductField(button) {
+  const productField = button.parentNode;
+  productField.remove();
+}
+	</script>
+</body>
+
+</html>
